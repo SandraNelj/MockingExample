@@ -21,6 +21,7 @@ class BookingSystemTest {
     private RoomRepository roomRepository;
     @Mock
     private NotificationService notificationService;
+
     @InjectMocks
     private BookingSystem bookingSystem;
 
