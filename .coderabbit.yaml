@@ -1,0 +1,8 @@
+# .coderabbit.yaml configuration
+language: "sv-SE"
+reviews:
+  profile: "chill"
+  auto_review: true
+  finishing_touches:
+    unit_tests:
+      enabled: true
