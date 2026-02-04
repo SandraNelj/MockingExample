@@ -7,9 +7,12 @@ public class ShoppingCart {
     private Map<Item, Integer> items = new HashMap<>();
 
     public void addItem(Item item, int quantity) {
-        items.put(item, quantity);
+        items.merge(item, quantity, Integer::sum);
     }
     public Map<Item, Integer> getItems() {
         return items;
+    }
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 }
