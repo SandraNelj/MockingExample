@@ -2,7 +2,8 @@
 language: "sv-SE"
 reviews:
   profile: "chill"
-  auto_review: true
+  auto_review:
+    enabled: true
   finishing_touches:
     unit_tests:
       enabled: true
