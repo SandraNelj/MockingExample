@@ -15,4 +15,12 @@ public class ShoppingCart {
     public void removeItem(Item item) {
         items.remove(item);
     }
+
+    public double calculateTotalPrice() {
+        double total = 0.0;
+        return items.entrySet()
+                .stream()
+                .mapToDouble(e -> e.getKey().getPrice() * e.getValue())
+                .sum();
+    }
 }
