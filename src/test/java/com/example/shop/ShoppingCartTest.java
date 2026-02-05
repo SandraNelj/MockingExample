@@ -67,4 +67,36 @@ class ShoppingCartTest {
         assertEquals(3, cart.getItems().get(apple));
     }
 
+    @Test
+    void totalPriceOfEmptyCartShouldBeZero() {
+        ShoppingCart cart = new ShoppingCart();
+        assertEquals(0.0, cart.calculateTotalPrice());
+    }
+
+    @Test
+    void removingNonExistingItemShouldNotThrow() {
+        ShoppingCart cart = new ShoppingCart();
+        Item apple = new Item("Apple", 10.0);
+
+        assertDoesNotThrow(() -> cart.removeItem(apple));
+    }
+
+    @Test
+    void addingZeroQuantityShouldNotChangeCart() {
+        ShoppingCart cart = new ShoppingCart();
+        Item apple = new Item("Apple", 10.0);
+        cart.addItem(apple, 0);
+
+        assertTrue(cart.getItems().isEmpty());
+    }
+
+    @Test
+    void addingNegativeQuantityShouldThrow() {
+        ShoppingCart cart = new ShoppingCart();
+        Item apple = new Item("Apple", 10.0);
+        assertThrows(IllegalArgumentException.class, () -> cart.addItem(apple, -1));
+    }
+
+
+
 }
