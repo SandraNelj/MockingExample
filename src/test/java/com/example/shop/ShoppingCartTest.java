@@ -55,4 +55,16 @@ class ShoppingCartTest {
 
         assertEquals(18.0, cart.calculateWithDiscount());
     }
+
+    @Test
+    @DisplayName("Should update quantity in cart")
+    void shouldUpdateQuantity() {
+        ShoppingCart cart = new ShoppingCart();
+        Item apple = new Item("Apple", 10.0);
+        cart.addItem(apple, 1);
+        cart.addItem(apple, 2);
+
+        assertEquals(3, cart.getItems().get(apple));
+    }
+
 }

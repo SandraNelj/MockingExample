@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Item {
 
-    private String name;
-    private double price;
-    private double discount;
+    private final String name;
+    private final double price;
+    private final double discount;
 
     public Item(String name, double price) {
         this(name, price, 0.0);
@@ -16,10 +16,10 @@ public class Item {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or blank");
         }
-        if (price <= 0) {
-            throw new IllegalArgumentException("Price cannot be negative");
+        if (Double.isNaN(price) || Double.isInfinite(price) || price < 0) {
+            throw new IllegalArgumentException("Price must be more than zero");
         }
-        if (discount < 0 || discount > 1) {
+        if (Double.isNaN(discount) || Double.isInfinite(discount) || discount < 0 || discount > 1) {
             throw new IllegalArgumentException("Discount must be between 0 and 1");
         }
         this.name = name;
