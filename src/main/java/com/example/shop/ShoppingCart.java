@@ -23,4 +23,10 @@ public class ShoppingCart {
                 .mapToDouble(e -> e.getKey().getPrice() * e.getValue())
                 .sum();
     }
+
+    public double calculateWithDiscount() {
+        return items.entrySet().stream()
+                .mapToDouble(e-> e.getKey().getPrice() * e.getValue() *
+                        (1 - e.getKey().getDiscount())).sum();
+    }
 }
