@@ -117,8 +117,11 @@ class BookingSystemTest {
     @DisplayName("Booking fails when roomId is null")
     void bookRoom_nullRoomId_throwsException(String roomId) {
 
+        LocalDateTime start = startTime();
+        LocalDateTime end = endTime();
+
         assertThatThrownBy(()->
-                bookingSystem.bookRoom(roomId, startTime(), endTime())
+                bookingSystem.bookRoom(roomId, start, end)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

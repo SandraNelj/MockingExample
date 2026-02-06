@@ -7,6 +7,9 @@ public class ShoppingCart {
     private Map<Item, Integer> items = new HashMap<>();
 
     public void addItem(Item item, int quantity) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
         }
@@ -16,7 +19,7 @@ public class ShoppingCart {
         items.merge(item, quantity, Integer::sum);
     }
     public Map<Item, Integer> getItems() {
-        return items;
+        return Map.copyOf(items);
     }
     public void removeItem(Item item) {
         items.remove(item);
