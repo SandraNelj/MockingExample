@@ -26,7 +26,7 @@ Projektet innehåller tre huvudpaket:
 - Summera totalpris
 - Applicera rabatter på varor
 - Hantera uppdateringar av kvantitet
-- Skydd mot felaktiga inputs (t.ex. negativ kvantitet eller null-objekt)
+- Skydd mot ogiltig indata (t.ex. negativ kvantitet eller null-objekt)
 
 ### BookingSystem
 
@@ -34,6 +34,9 @@ Projektet innehåller tre huvudpaket:
 - Kontrollera tillgänglighet
 - Avboka bokningar med notifiering
 - Mocking används för TimeProvider, RoomRepository och NotificationService
+
+Utöver lyckade scenarion testas även centrala affärsregler och valideringar i BookingSystem, 
+såsom bokning i dåtid, ogiltiga tidsintervall och hantering av null-värden.
 
 ### PaymentProcessor
 
@@ -76,5 +79,8 @@ Konstruktor-injection valdes för tydlighet och testbarhet
 Statisk kod togs bort för att undvika dolda beroenden
 Affärslogik isolerades från infrastruktur
 
-PaymentProcessor har refaktorerats genom att extrahera externa beroenden till 
-interface och injecera dem via konstruktor. 
+PaymentProcessor har refaktorerats genom att identifiera externa beroenden
+(betalningsgateway, persistens och notifiering) och extrahera dessa till
+interface. Beroendena injiceras via konstruktor (constructor injection),
+vilket möjliggör isolerade enhetstester med mockade implementationer och
+förbättrar kodens testbarhet och underhållbarhet.
