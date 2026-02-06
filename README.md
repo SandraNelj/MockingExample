@@ -50,7 +50,7 @@ Projektet innehåller tre huvudpaket:
 - **Enhetstester:** Verifierar både lyckade och misslyckade scenarion
 - **AssertJ** används konsekvent för läsbar och fluent assertion
 - **Mockito** används för att skapa test doubles
-- **Kantt tester:**
+- **Kanttester:**
     - Tom kundvagn
     - Lägg till 0 kvantitet
     - Lägg till negativ kvantitet
