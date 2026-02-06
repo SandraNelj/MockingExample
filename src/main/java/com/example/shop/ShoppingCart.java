@@ -7,6 +7,12 @@ public class ShoppingCart {
     private Map<Item, Integer> items = new HashMap<>();
 
     public void addItem(Item item, int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        }
+        if (quantity == 0) {
+            return;
+        }
         items.merge(item, quantity, Integer::sum);
     }
     public Map<Item, Integer> getItems() {
@@ -17,7 +23,6 @@ public class ShoppingCart {
     }
 
     public double calculateTotalPrice() {
-        double total = 0.0;
         return items.entrySet()
                 .stream()
                 .mapToDouble(e -> e.getKey().getPrice() * e.getValue())
