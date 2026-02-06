@@ -10,6 +10,9 @@ public class ShoppingCart {
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
         }
+        if (quantity == 0) {
+            return;
+        }
         items.merge(item, quantity, Integer::sum);
     }
     public Map<Item, Integer> getItems() {

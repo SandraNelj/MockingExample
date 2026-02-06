@@ -96,7 +96,4 @@ class ShoppingCartTest {
         Item apple = new Item("Apple", 10.0);
         assertThrows(IllegalArgumentException.class, () -> cart.addItem(apple, -1));
     }
-
-
-
 }
