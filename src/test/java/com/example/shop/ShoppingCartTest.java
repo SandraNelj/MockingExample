@@ -1,9 +1,8 @@
 package com.example.shop;
 
+import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class ShoppingCartTest {
 
@@ -15,8 +14,12 @@ class ShoppingCartTest {
 
         cart.addItem(apple, 1);
 
-        assertEquals(1, cart.getItems().size());
-        assertTrue(cart.getItems().containsKey(apple));
+        assertThat(cart.getItems())
+                .size()
+                .isEqualTo(1);
+
+        assertThat(cart.getItems())
+                .containsKey(apple);
     }
 
     @Test
@@ -25,10 +28,12 @@ class ShoppingCartTest {
         ShoppingCart cart = new ShoppingCart();
         Item apple = new Item("Apple", 10.0);
         cart.addItem(apple, 1);
-
         cart.removeItem(apple);
-        assertFalse(cart.getItems().containsKey(apple));
+
+        assertThat(cart.getItems())
+                .isEmpty();
     }
+
 
     @Test
     @DisplayName("Should calculate total price of items in cart")
@@ -42,7 +47,8 @@ class ShoppingCartTest {
         cart.addItem(banana, 3);
         cart.addItem(pear, 2);
 
-        assertEquals(59.0, cart.calculateTotalPrice());
+        assertThat(cart.calculateTotalPrice())
+                .isEqualTo(59.0);
     }
 
     @Test
@@ -53,7 +59,8 @@ class ShoppingCartTest {
 
         cart.addItem(apple, 2);
 
-        assertEquals(18.0, cart.calculateWithDiscount());
+        assertThat(cart.calculateWithDiscount())
+                .isEqualTo(18.0);
     }
 
     @Test
@@ -64,13 +71,15 @@ class ShoppingCartTest {
         cart.addItem(apple, 1);
         cart.addItem(apple, 2);
 
-        assertEquals(3, cart.getItems().get(apple));
+        assertThat(cart.getItems())
+                .containsEntry(apple, 3);
     }
 
     @Test
     void totalPriceOfEmptyCartShouldBeZero() {
         ShoppingCart cart = new ShoppingCart();
-        assertEquals(0.0, cart.calculateTotalPrice());
+
+        assertThat(cart.calculateTotalPrice()).isEqualTo(0.0);
     }
 
     @Test
@@ -78,7 +87,8 @@ class ShoppingCartTest {
         ShoppingCart cart = new ShoppingCart();
         Item apple = new Item("Apple", 10.0);
 
-        assertDoesNotThrow(() -> cart.removeItem(apple));
+        assertThatCode(() -> cart.removeItem(apple))
+                .doesNotThrowAnyException();
     }
 
     @Test
@@ -87,13 +97,17 @@ class ShoppingCartTest {
         Item apple = new Item("Apple", 10.0);
         cart.addItem(apple, 0);
 
-        assertTrue(cart.getItems().isEmpty());
+        assertThat(cart.getItems())
+                .isEmpty();
     }
 
     @Test
     void addingNegativeQuantityShouldThrow() {
         ShoppingCart cart = new ShoppingCart();
         Item apple = new Item("Apple", 10.0);
-        assertThrows(IllegalArgumentException.class, () -> cart.addItem(apple, -1));
+
+        assertThatThrownBy(() -> cart.addItem(apple, -1))
+        .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Quantity cannot be negative");
     }
 }

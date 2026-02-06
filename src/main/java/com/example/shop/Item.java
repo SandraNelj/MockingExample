@@ -16,7 +16,7 @@ public class Item {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name cannot be null or blank");
         }
-        if (Double.isNaN(price) || Double.isInfinite(price) || price < 0) {
+        if (Double.isNaN(price) || Double.isInfinite(price) || price <= 0) {
             throw new IllegalArgumentException("Price must be more than zero");
         }
         if (Double.isNaN(discount) || Double.isInfinite(discount) || discount < 0 || discount > 1) {
