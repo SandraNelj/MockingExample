@@ -129,6 +129,9 @@ class BookingSystemTest {
 
         boolean result = bookingSystem.cancelBooking("B1");
         assertThat(result).isTrue();
+        verify(room).removeBooking("B1");
+        verify(roomRepository).save(room);
+        verify(notificationService).sendCancellationConfirmation(booking);
     }
 
     @ParameterizedTest
