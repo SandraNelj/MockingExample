@@ -97,4 +97,3 @@ public class BookingSystem {
     }
 }
 
-// Stödklasser och interface som behövs:
