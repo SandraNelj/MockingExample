@@ -112,6 +112,25 @@ class BookingSystemTest {
         boolean result = bookingSystem.cancelBooking("X1");
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("Cancel booking succeeds even if notification fails")
+    void cancelBooking_notificationFails_stillSucceeds() throws NotificationException {
+        Booking booking = new Booking("B1", "A1", startTime(), endTime());
+
+        when(timeProvider.getCurrentTime()).thenReturn(fixed_dateTime);
+        when(room.hasBooking("B1")).thenReturn(true);
+        when(room.getBooking("B1")).thenReturn(booking);
+        when(roomRepository.findAll()).thenReturn(List.of(room));
+
+        doThrow(new NotificationException("Fail"))
+                .when(notificationService)
+                .sendCancellationConfirmation(booking);
+
+        boolean result = bookingSystem.cancelBooking("B1");
+        assertThat(result).isTrue();
+    }
+
     @ParameterizedTest
     @NullSource
     @DisplayName("Booking fails when roomId is null")

@@ -8,6 +8,7 @@ Detta projekt är en laboration i **Testdriven utveckling (TDD)** med fokus på:
 - Mocking av beroenden med **Mockito**
 - Implementering av **ShoppingCart** och **BookingSystem**
 - Refaktorering och **Dependency Injection** för testbarhet och underhållbarhet
+- Parameterized tests används för att testa flera ogiltiga indata med samma testlogik.
 
 Projektet innehåller tre huvudpaket:
 
@@ -74,13 +75,13 @@ Ursprung: EmailService
 Extraherat till: EmailNotifier**
 
 ### Refaktoreringsbeslut:
-Interface används för att möjliggöra mockning och framtida implementationer
-Konstruktor-injection valdes för tydlighet och testbarhet
-Statisk kod togs bort för att undvika dolda beroenden
-Affärslogik isolerades från infrastruktur
+Interface används för att möjliggöra mockning och framtida implementationer  
+Konstruktor-injection valdes för tydlighet och testbarhet  
+Statisk kod togs bort för att undvika dolda beroenden  
+Affärslogik isolerades från infrastruktur  
 
-PaymentProcessor har refaktorerats genom att identifiera externa beroenden
-(betalningsgateway, persistens och notifiering) och extrahera dessa till
-interface. Beroendena injiceras via konstruktor (constructor injection),
-vilket möjliggör isolerade enhetstester med mockade implementationer och
-förbättrar kodens testbarhet och underhållbarhet.
+PaymentProcessor har refaktorerats genom att identifiera externa beroenden  
+(betalningsgateway, persistens och notifiering) och extrahera dessa till  
+interface. Beroendena injiceras via konstruktor (constructor injection),  
+vilket möjliggör isolerade enhetstester med mockade implementationer och  
+förbättrar kodens testbarhet och underhållbarhet.  

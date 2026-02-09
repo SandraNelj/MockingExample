@@ -3,6 +3,9 @@ package com.example.shop;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class ShoppingCartTest {
 
@@ -101,13 +104,23 @@ class ShoppingCartTest {
                 .isEmpty();
     }
 
-    @Test
-    void addingNegativeQuantityShouldThrow() {
+    @ParameterizedTest
+    @ValueSource(ints = {-1, -5, -10})
+    void addingNegativeQuantityShouldThrow(int quantity) {
         ShoppingCart cart = new ShoppingCart();
         Item apple = new Item("Apple", 10.0);
 
-        assertThatThrownBy(() -> cart.addItem(apple, -1))
+        assertThatThrownBy(() -> cart.addItem(apple, quantity))
         .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Quantity cannot be negative");
+    }
+
+    @ParameterizedTest
+    @NullSource
+    void addingNullItemShouldThrow(Item item) {
+        ShoppingCart cart = new ShoppingCart();
+
+        assertThatThrownBy(() -> cart.addItem(item, 1))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
