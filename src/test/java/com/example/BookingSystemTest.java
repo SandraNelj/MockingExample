@@ -124,4 +124,61 @@ class BookingSystemTest {
                 bookingSystem.bookRoom(roomId, start, end)
         ).isInstanceOf(IllegalArgumentException.class);
     }
+    @Test
+    @DisplayName("Booking fails when startTime is null")
+    void bookRoom_nullStartTime_throwsException() {
+        LocalDateTime end = endTime();
+        assertThatThrownBy(()->
+                bookingSystem.bookRoom("A1", null, end))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("Booking fails when endTime is null")
+    void bookRoom_nullEndTime_throwsException() {
+        LocalDateTime start = startTime();
+        assertThatThrownBy(() ->
+                bookingSystem.bookRoom("A1", start, null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("Booking fails when startTime is in the past")
+    void bookRoom_startTimeInPast_throwsException() {
+        when(timeProvider.getCurrentTime()).thenReturn(fixed_dateTime);
+
+        LocalDateTime pastStart = fixed_dateTime.minusHours(1);
+        LocalDateTime end = fixed_dateTime.plusHours(1);
+
+        assertThatThrownBy(()->
+                bookingSystem.bookRoom("A1", pastStart, end))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("Booking fails when endTime is before startTime")
+    void bookRoom_endTimeBeforeStartTime_throwsException() {
+        when(timeProvider.getCurrentTime()).thenReturn(fixed_dateTime);
+        LocalDateTime start = fixed_dateTime.plusHours(2);
+        LocalDateTime end = fixed_dateTime.minusHours(1);
+
+        assertThatThrownBy(() ->
+                bookingSystem.bookRoom("A1",start, end))
+                .isInstanceOf(IllegalArgumentException.class);
+
+    }
+
+    @Test
+    @DisplayName("Booking fails when room does not exist")
+    void bookRoom_roomDoesNotExist_throwsException() {
+        LocalDateTime start = startTime();
+        LocalDateTime end = endTime();
+
+        when(timeProvider.getCurrentTime()).thenReturn(fixed_dateTime);
+        when(roomRepository.findById("X1")).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() ->
+                bookingSystem.bookRoom("X1", start, end))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
